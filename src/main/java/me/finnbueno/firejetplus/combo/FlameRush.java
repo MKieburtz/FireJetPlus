@@ -79,7 +79,7 @@ public class FlameRush extends OverriddenFireAbility implements ComboAbility, Ad
 			return;
 		}
 
-		this.player.getWorld().spawnParticle(Particle.SMOKE_LARGE, player.getLocation(), 10, .2, .2, .2, 0.05);
+		this.player.getWorld().spawnParticle(Particle.LARGE_SMOKE, player.getLocation(), 10, .2, .2, .2, 0.05);
 
 		if (ThreadLocalRandom.current().nextInt(4) == 0) {
 			this.player.getWorld().playSound(player.getEyeLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1f, .4f);

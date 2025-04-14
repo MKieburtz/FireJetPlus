@@ -7,6 +7,7 @@ import com.projectkorra.projectkorra.ability.CoreAbility;
 import com.projectkorra.projectkorra.attribute.Attribute;
 import com.projectkorra.projectkorra.firebending.combo.JetBlast;
 import com.projectkorra.projectkorra.firebending.combo.JetBlaze;
+import com.projectkorra.projectkorra.region.RegionProtection;
 import me.finnbueno.firejetplus.config.ConfigValue;
 import me.finnbueno.firejetplus.config.ConfigValueHandler;
 import me.finnbueno.firejetplus.listener.FireJetListener;
@@ -233,15 +234,17 @@ public class FireJet extends OverriddenFireAbility implements AddonAbility {
 		}
 
 		if (this.ignite) {
-			GeneralMethods.getEntitiesAroundPoint(getLocation(), 1).stream()
-				.filter(e -> e.getUniqueId() != player.getUniqueId())
-				.filter(e -> e instanceof LivingEntity)
-				.filter(e -> !lit.contains(e))
-				.map(e -> (LivingEntity) e)
-				.forEach(e -> {
-					lit.add(e);
-					e.setFireTicks(fireTicks);
-				});
+			if (!RegionProtection.isRegionProtected(player, player.getLocation())) {
+				GeneralMethods.getEntitiesAroundPoint(getLocation(), 1).stream()
+						.filter(e -> e.getUniqueId() != player.getUniqueId())
+						.filter(e -> e instanceof LivingEntity)
+						.filter(e -> !lit.contains(e))
+						.map(e -> (LivingEntity) e)
+						.forEach(e -> {
+							lit.add(e);
+							e.setFireTicks(fireTicks);
+						});
+			}
 		}
 		if (!checkForOnGround && flyTime > 250) {
 			checkForOnGround = true;

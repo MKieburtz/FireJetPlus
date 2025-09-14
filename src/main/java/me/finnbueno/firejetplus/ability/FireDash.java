@@ -31,6 +31,7 @@ public class FireDash extends OverriddenFireAbility implements AddonAbility {
 
 	private Vector direction;
 
+	private int durationTicks = 1;
 	/**
 	 * This constructor is used to generate config values, do not use
 	 */
@@ -76,11 +77,11 @@ public class FireDash extends OverriddenFireAbility implements AddonAbility {
 		}
 		if (getStartTime() + LAUNCH_DURATION > System.currentTimeMillis()) {
 			player.setVelocity(this.direction);
-		} else if (isTouchingGround()) {
+		} else if (isTouchingGround() && durationTicks > 3) {
 			remove();
 			return;
 		}
-
+		durationTicks++;
 		player.setFallDistance(0);
 		display();
 	}
